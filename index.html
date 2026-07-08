@@ -2,13 +2,16 @@
 <html lang="de">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>RecipeSwipe – Das interaktive Live-Kochbuch</title>
-    <!-- Tailwind CSS CDN -->
+    
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="RecipeSwipe">
+    <meta name="mobile-web-app-capable" content="yes">
+    
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    <!-- Supabase CDN für Live-Cloud-Anbindung -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     
     <script>
@@ -49,7 +52,6 @@
 </head>
 <body class="min-h-screen flex flex-col items-center pb-24 px-4 overflow-x-hidden">
 
-    <!-- Header -->
     <header class="w-full max-w-md flex justify-between items-center py-4 mb-2 z-50">
         <div class="flex items-center gap-2">
             <span class="text-2xl">🃏</span>
@@ -63,7 +65,6 @@
         </div>
     </header>
 
-    <!-- ================= 1. HOME DASHBOARD ================= -->
     <div id="homeView" class="view-section active w-full max-w-md flex flex-col gap-6">
         <div class="bg-gradient-to-br from-white to-slate-50 dark:from-slate-800 dark:to-slate-900 p-6 rounded-3xl shadow-premium border border-slate-100 dark:border-slate-800 text-center relative overflow-hidden group">
             <h2 class="text-2xl font-extrabold text-slate-800 dark:text-white mb-2">Was kochen wir heute?</h2>
@@ -82,7 +83,6 @@
         </div>
     </div>
 
-    <!-- ================= 2. SWIPE GAME ================= -->
     <div id="gameView" class="view-section hidden w-full max-w-md flex flex-col gap-4">
         <div class="flex justify-between items-center px-2">
             <div class="text-sm font-extrabold text-primary" id="gameStatus">Bereitmachen...</div>
@@ -92,7 +92,6 @@
         <div class="game-controls flex justify-center items-center gap-4 w-full px-4 mt-2" id="gameControls"></div>
     </div>
 
-    <!-- ================= 3. REZEPT-LISTE ================= -->
     <div id="listView" class="view-section hidden w-full max-w-md flex flex-col gap-4">
         <button class="w-full py-3.5 px-4 bg-primary text-white hover:bg-primary-hover font-extrabold rounded-2xl shadow-md transition-all flex items-center justify-center gap-2" onclick="openAddModal()">
             <span>+ Neues Rezept hinzufügen</span>
@@ -107,7 +106,6 @@
         <div class="flex flex-col gap-3" id="listContainer"></div>
     </div>
 
-    <!-- Navigation Tabs -->
     <nav class="flex bg-white/95 dark:bg-slate-900/95 backdrop-blur-md border-t border-slate-100 dark:border-slate-800 fixed bottom-0 left-0 right-0 w-full z-[100] shadow-2xl justify-center">
         <div class="w-full max-w-md flex">
             <button class="tab-btn flex-1 py-4 text-center font-bold text-xs flex flex-col items-center gap-1 text-slate-400" id="tabHome" onclick="switchView('home')"><span>🏠</span><span>Home</span></button>
@@ -116,7 +114,6 @@
         </div>
     </nav>
 
-    <!-- RECIPE MODAL -->
     <div class="modal fixed inset-0 bg-slate-950/60 hidden items-center justify-center p-4 z-[200] backdrop-blur-sm" id="recipeModal">
         <div class="modal-content bg-white dark:bg-slate-900 w-full max-w-md rounded-3xl p-6 max-h-[85vh] overflow-y-auto custom-scrollbar border border-slate-100 dark:border-slate-800 transition-transform duration-300">
             <div class="flex justify-between items-center mb-5 pb-2 border-b border-slate-100 dark:border-slate-800">
@@ -174,7 +171,6 @@
         </div>
     </div>
 
-    <!-- CONFIRMATION MODAL -->
     <div class="modal fixed inset-0 bg-slate-950/60 hidden items-center justify-center p-4 z-[250] backdrop-blur-sm" id="confirmModal">
         <div class="modal-content bg-white dark:bg-slate-900 w-full max-w-sm rounded-3xl p-6 text-center">
             <span class="text-4xl inline-block mb-3">⚠️</span>
@@ -187,16 +183,13 @@
         </div>
     </div>
 
-    <!-- Toast Notification -->
     <div id="toast" class="fixed bottom-24 left-1/2 -translate-x-1/2 px-4 py-3 bg-slate-900 text-white dark:bg-white dark:text-slate-900 font-semibold text-xs rounded-full shadow-xl opacity-0 transition-all duration-300 z-[300]"></div>
 
-    <!-- ================= JAVASCRIPT & SUPABASE CLOUD LOGIC ================= -->
     <script>
-        // !!! GEB HIER DEINE DATEN AUS SCHRITT 2 EIN !!!
-        const SUPABASE_URL = "https://pbfzbhlfoildmecjbupl.supabase.co";
-        const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBiZnpiaGxmb2lsZG1lY2pidXBsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODM1MDM4NTEsImV4cCI6MjA5OTA3OTg1MX0.n3ePJpno76Cr7SQYwhc6TgUDNFvtFh3UYBvQxUxW3CI";
+        const SUPABASE_URL = "https://pbfzbhlfoildmecjbupl.supabase.co"; 
+        const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBiZnpiaGxmb2lsZG1lY2pidXBsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODM1MDM4NTEsImV4cCI6MjA5OTA3OTg1MX0.n3ePJpno76Cr7SQYwhc6TgUDNFvtFh3UYBvQxUxW3CI"; 
 
-        const supabase =  supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+        const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
         let recipes = [];
         let activeDeck = [];
@@ -209,17 +202,14 @@
         let pendingConfirmAction = null;
 
         window.addEventListener('DOMContentLoaded', async () => {
-            // Theme initialisieren
             if (localStorage.getItem('dark-mode') === 'true') {
                 document.documentElement.classList.add('dark');
                 document.getElementById('theme-icon').textContent = "☀️";
             }
             
-            // 1. Rezepte initial aus Cloud laden
             await loadRecipesFromCloud();
 
-            // 2. Echtzeit Live-Sync aktivieren (Immer wenn jemand speichert/löscht, aktualisiert sich die App automatisch!)
-            supabase
+            supabaseClient
                 .channel('schema-db-changes')
                 .on('postgres_changes', { event: '*', schema: 'public', table: 'recipes' }, async () => {
                     await loadRecipesFromCloud();
@@ -228,7 +218,7 @@
         });
 
         async function loadRecipesFromCloud() {
-            const { data, error } = await supabase
+            const { data, error } = await supabaseClient
                 .from('recipes')
                 .select('*')
                 .order('title', { ascending: true });
@@ -405,7 +395,6 @@
             cardBox.className = 'w-full h-[465px] relative preserve-3d transition-transform duration-300 interactive-card cursor-pointer';
             cardBox.id = 'activeCardBox';
             
-            // Minimalistischer Aufbau der Swipe-Karte
             let imgHtml = r.image ? `<div class="w-full h-32 rounded-xl overflow-hidden mb-2"><img src="${r.image}" class="w-full h-full object-cover"></div>` : `<div class="w-full h-24 rounded-xl bg-slate-50 dark:bg-slate-800 flex items-center justify-center text-3xl mb-2">🍽️</div>`;
             
             cardBox.innerHTML = `
@@ -449,7 +438,6 @@
             }, 200);
         }
 
-        // --- CLOUD-DB SPEICHERN & LÖSCHEN ---
         function renderList() {
             const container = document.getElementById('listContainer');
             const searchVal = document.getElementById('searchBar').value.toLowerCase();
@@ -457,6 +445,10 @@
             renderFilterBar();
 
             let filtered = recipes.filter(r => r.title.toLowerCase().includes(searchVal));
+
+            if (currentFilterTag !== "Alle") {
+                filtered = filtered.filter(r => r.type === currentFilterTag);
+            }
 
             if (filtered.length === 0) {
                 container.innerHTML = `<div class="p-6 text-center text-xs text-slate-400">Keine Rezepte gefunden.</div>`;
@@ -575,7 +567,6 @@
             document.getElementById('recipeModal').classList.remove('flex');
         }
 
-        // --- DIRETKTE LIVE-SPEICHERUNG IN CLOUD ---
         async function saveRecipe() {
             const title = document.getElementById('formTitle').value.trim();
             const typeInput = document.querySelector('input[name="formType"]:checked');
@@ -605,11 +596,9 @@
 
             let result;
             if (rId) {
-                // In Cloud updaten
-                result = await supabase.from('recipes').update(recipeData).eq('id', rId);
+                result = await supabaseClient.from('recipes').update(recipeData).eq('id', rId);
             } else {
-                // In Cloud neu einfügen
-                result = await supabase.from('recipes').insert([recipeData]);
+                result = await supabaseClient.from('recipes').insert([recipeData]);
             }
 
             if (result.error) {
@@ -627,7 +616,7 @@
             document.getElementById('confirmMessage').innerHTML = `Möchtest du <strong>"${recipe.title}"</strong> wirklich aus der Cloud löschen?`;
             pendingConfirmAction = async () => {
                 showToast("Lösche aus Cloud...");
-                const { error } = await supabase.from('recipes').delete().eq('id', id);
+                const { error } = await supabaseClient.from('recipes').delete().eq('id', id);
                 if (error) showToast("Fehler beim Löschen."); else showToast("Erfolgreich gelöscht!");
                 await loadRecipesFromCloud();
             };
